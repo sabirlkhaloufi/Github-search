@@ -3,6 +3,7 @@ import axios from 'axios'
 import Repo from './Repo'
 
 function Profile() {
+
     const [username, setUserName] = useState({name:""})
     const [dataUser, setDataUser] = useState({})
     const [RepoUser, setRepoUser] = useState([])
@@ -10,37 +11,29 @@ function Profile() {
     const onChange = (e)=>{
         setUserName({name:e.target.value})
     }
-    console.log(username);
 
-    
     const getUser = (e)=>{
         e.preventDefault();
-        console.log(username);
         axios.get(`https://api.github.com/users/${username.name}`).then((response)=>{
         // console.log(response.data);
         setDataUser(response.data)
-        console.log(dataUser);
         getRepo();
         
     }).catch((Error)=>{
         console.log(Error);
-    })
-
-    
+    })    
     }
 
     const getRepo = ()=>{
       axios.get(`https://api.github.com/users/${username.name}/repos`).then((response)=>{
          setRepoUser(response.data);
          
+         
      }).catch((Error)=>{
          console.log(Error);
      })
     }
 
-    
-    
-    
   return (
     <div className="main-content position-relative max-height-vh-100 h-100">
 
@@ -49,7 +42,7 @@ function Profile() {
       <div className="row gx-4">
         <div className="col-auto">
           <div className="avatar avatar-xl position-relative">
-            <img src="assets/img/team-1.jpg
+            <img src="assets/img/team-2.png
             " alt="profile_image" className="w-100 border-radius-lg shadow-sm" />
           </div>
         </div>
@@ -62,13 +55,16 @@ function Profile() {
               Developed By Sabir Lkhaloufi
             </p>
           </div>
+          <div>
+            <ul><li>jjd</li></ul>
+          </div>
         </div>
         
         <div className="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
         <form className="input-group col-auto my-auto" onSubmit={getUser}>
           <span className="input-group-text text-body"><i className="fas fa-search" aria-hidden="true" /></span>
           <input type="text" className="form-control" name='username' placeholder="Enter Your Username..." onChange={onChange} />
-          <button type='submit' className="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block" >search</button>
+          <button type='submit' className="btn btn-sm btn-dark float-right mb-0 d-lg-block" >search</button>
         </form>
         </div>
       </div>
@@ -137,7 +133,7 @@ function Profile() {
         </div>
       </div>
 
-      {RepoUser && <Repo data={RepoUser}/>}
+      {RepoUser && <Repo data={RepoUser} username={dataUser.login}/>}
 
     </div>
   </div>

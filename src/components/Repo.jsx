@@ -1,63 +1,111 @@
 import React, {useState,useEffect} from 'react'
-import Pagination from 'react-paginate';
+import ReactPaginate from 'react-paginate';
+import axios from 'axios';
+
 
 function Repo(props) {
-  
+
   let repo = props.data;
-  const urlRepo = "https://github1s.com/sabirlkhaloufi/";
+  const username = props.username;
+  const urlRepo = `https://github1s.com/${username}/`;
+
+  console.log(repo.git_commit_url);
+  
+  const getNbrCommit = (name)=>{
+    console.log(name);
+  //     axios.get(url).then((response)=>{
+  //     console.log(response.data)
+      
+  // }).catch((Error)=>{
+  //     console.log(Error);
+  // })   
+  }
+
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 6;
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = repo.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(repo.length / itemsPerPage);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % repo.length;
+    setItemOffset(newOffset);
+  };
 
   return (
 
     <div className="col-md-8">
-      <div className="card">
-        <div className="card-header pb-0">
+      <div className="">
+        <div className="">
         </div>
-        <div className="card-body">
+        <div className="">
           <h2 className="text-lg">All Repositories</h2>
 
-          <div className="grid-container">
+          <div className="mt-5 row">
 
 
             
 
-          {repo.sort((a, b) => a.stargazers_count< b.stargazers_count ? 1:-1).map((repo) => {
-        return  <a target="_blank" href={urlRepo+repo.name}>
-        <div className="card w-auto h-100 d-flex flex-row justify-content-center align-items-center py-2">
-        <div className="card-header p-2 text-center">
-          
-          
-        </div>
+          {currentItems.sort((a, b) => a.stargazers_count< b.stargazers_count ? 1:-1).map((repo) => {
+        return ( <div className="col-12 col-lg-4 mb-3">
+          <div className="card p-3 h-100">
+            <div className="d-flex justify-content-between">
+              <div className="d-flex flex-row align-items-center gap-5">
+              <a className="icon"> <i class='bx bx-star'></i> </a>
+              <a className="icon"> <i class='bx bxl-github'></i> </a>
+                
+              </div>  
+              
+            </div>
+            <div className="mt-3">
+              <h5 className="heading">{repo.name}</h5>
+              <div className="mt-3 ">
+                {/* <div className="progress">
+                  <div className="progress-bar" role="progressbar" style={{width: '50%'}} aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} />
+                </div> */}
+                
+                    <div className="badge d-flex align-items-center gap-4 w-100">
+                      <span><i class='bx bx-star ps-3'></i> <span>{repo.stargazers_count}</span></span>
+                      <span><i class='bx bx-star ps-3'></i> <span>{repo.forks_count}</span> </span>
+                      <span><i class='bx bx-star ps-3'></i> <span>{getNbrCommit(repo.name)}</span> </span>
+                    </div>  
+              </div>
+            </div>
+          </div>
+        </div>)
 
         
-        <div>
-        <h6 className="text-center mb-0 p-3">{repo.name}</h6>
-        <div>
-        <div>
-        <i class="fa-regular fa-star"></i> <span>{repo.stargazers_count}</span>
-        </div>
-
-        </div>
-        </div>
-          
-          
         
-      </div>
-      </a>
+
       })}
 
-      <div>
-      
-      </div>
 
-
-              
-                  
-                
-  
 
           </div>
           </div>
 
+         <div className='d-flex justify-content-center mt-2'>
+         <ReactPaginate
+        nextLabel="N >"
+        previousLabel="< P"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={9}
+        marginPagesDisplayed={2}
+        pageCount={pageCount}        
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        containerClassName="pagination"
+        activeClassName="active"
+        renderOnZeroPageCount={null}
+      />
+         </div>
         </div>
       </div>
   )
