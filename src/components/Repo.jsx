@@ -9,16 +9,25 @@ function Repo(props) {
   const username = props.username;
   const urlRepo = `https://github1s.com/${username}/`;
 
-  console.log(repo.git_commit_url);
   
   const getNbrCommit = (name)=>{
-    console.log(name);
-  //     axios.get(url).then((response)=>{
-  //     console.log(response.data)
-      
-  // }).catch((Error)=>{
-  //     console.log(Error);
-  // })   
+
+    repo.forEach(rep => {
+      if(rep.name == name){
+        rep.commits_url = rep.commits_url.slice(0, -6);
+        console.log(rep.commits_url);
+        // axios.get(url).then((response)=>{
+
+        //   console.log(response.data)
+
+        // }).catch((Error)=>{
+
+        //   console.log(Error);
+
+        // })   
+      }
+    });
+  
   }
 
   const [itemOffset, setItemOffset] = useState(0);
@@ -49,17 +58,18 @@ function Repo(props) {
           {currentItems.sort((a, b) => a.stargazers_count< b.stargazers_count ? 1:-1).map((repo) => {
         return ( <div className="col-12 col-lg-4 mb-3">
           <div className="card p-3 h-100">
+          
             <div className="d-flex justify-content-between">
-              <div className="d-flex flex-row align-items-center gap-5">
-              <a className="icon"> <i class='bx bx-star'></i> </a>
-              <a className="icon"> <i class='bx bxl-github'></i> </a>
-                
+            
+              <div className="d-flex flex-row align-items-center gap-4">
+              <p>Open in:</p>
+              <a href={urlRepo+repo.name} target="_blank" className="icon"> <img class="p-2" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="" srcset="" /> </a>
+              <a href={repo.uri} className="icon" target="_blank"> <i class='bx bxl-github'></i> </a>
               </div>  
-              
             </div>
             <div className="mt-3">
               <h5 className="heading">{repo.name}</h5>
-              <div className="mt-3 ">
+              <div className="mt-3">
                 {/* <div className="progress">
                   <div className="progress-bar" role="progressbar" style={{width: '50%'}} aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} />
                 </div> */}

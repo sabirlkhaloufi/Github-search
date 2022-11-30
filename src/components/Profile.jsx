@@ -79,7 +79,7 @@ function Profile() {
             <div className="col-5 col-lg-5 order-lg-2">
               <div className="mt-n4 mt-lg-n7 mb-4 mb-lg-0">
 
-                  <img src={dataUser.avatar_url} className="rounded-circle img-fluid border border-2 border-white"/>
+                  <img src={dataUser.avatar_url}className="rounded-circle img-fluid border border-2 border-white"/>
                   <h5>
               {dataUser.name?dataUser.name:"UserName" }
               </h5>
@@ -93,7 +93,7 @@ function Profile() {
             <div className="d-flex justify-content-between">
               <a target="_blank" href={dataUser.html_url } className="btn btn-sm btn-dark float-right mb-0  ">Profile</a>
               {/* <a href="javascript:;" className="btn btn-sm btn-info mb-0 d-block d-lg-none"><i className="ni ni-collection" /></a> */}
-              <a href={"https://twitter.com/"+dataUser.twitter_username} className="btn btn-sm btn-dark float-right mb-0 ">Twitter</a>
+              <a href={"https://twitter.com/"+dataUser.twitter_username} target="_blank" className="btn btn-sm btn-dark float-right mb-0 ">Twitter</a>
               {/* <a href="javascript:;" className="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i className="ni ni-email-83" /></a> */}
             </div>
           </div>
