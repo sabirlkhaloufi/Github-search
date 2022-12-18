@@ -1,6 +1,5 @@
 import React, {useState,useEffect} from 'react'
 import ReactPaginate from 'react-paginate';
-import axios from 'axios';
 
 
 function Repo(props) {
@@ -8,27 +7,6 @@ function Repo(props) {
   let repo = props.data;
   const username = props.username;
   const urlRepo = `https://github1s.com/${username}/`;
-
-  
-  const getNbrCommit = (name)=>{
-
-    repo.forEach(rep => {
-      if(rep.name == name){
-        rep.commits_url = rep.commits_url.slice(0, -6);
-        console.log(rep.commits_url);
-        // axios.get(url).then((response)=>{
-
-        //   console.log(response.data)
-
-        // }).catch((Error)=>{
-
-        //   console.log(Error);
-
-        // })   
-      }
-    });
-  
-  }
 
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 6;
@@ -64,7 +42,7 @@ function Repo(props) {
               <div className="d-flex flex-row align-items-center gap-4">
               <p>Open in:</p>
               <a href={urlRepo+repo.name} target="_blank" className="icon"> <img class="p-2" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg" alt="" srcset="" /> </a>
-              <a href={repo.uri} className="icon" target="_blank"> <i class='bx bxl-github'></i> </a>
+              <a href={repo.svn_url} className="icon" target="_blank"> <i class='bx bxl-github'></i> </a>
               </div>  
             </div>
             <div className="mt-3">
@@ -74,11 +52,11 @@ function Repo(props) {
                   <div className="progress-bar" role="progressbar" style={{width: '50%'}} aria-valuenow={50} aria-valuemin={0} aria-valuemax={100} />
                 </div> */}
                 
-                    <div className="badge d-flex align-items-center gap-4 w-100">
+                    {/* <div className="badge d-flex align-items-center gap-4 w-100">
                       <span><i class='bx bx-star ps-3'></i> <span>{repo.stargazers_count}</span></span>
                       <span><i class='bx bx-star ps-3'></i> <span>{repo.forks_count}</span> </span>
                       <span><i class='bx bx-star ps-3'></i> <span>{getNbrCommit(repo.name)}</span> </span>
-                    </div>  
+                    </div>   */}
               </div>
             </div>
           </div>

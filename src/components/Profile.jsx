@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import Repo from './Repo'
+import SocialMedia from './SocialMedia'
 
 function Profile() {
 
-    const [username, setUserName] = useState({name:""})
+    const [username, setUserName] = useState({name:"sabirlkhaloufi"})
     const [dataUser, setDataUser] = useState({})
     const [RepoUser, setRepoUser] = useState([])
 
@@ -15,7 +16,6 @@ function Profile() {
     const getUser = (e)=>{
         e.preventDefault();
         axios.get(`https://api.github.com/users/${username.name}`).then((response)=>{
-        // console.log(response.data);
         setDataUser(response.data)
         getRepo();
         
@@ -34,10 +34,20 @@ function Profile() {
      })
     }
 
+    useEffect(() => {
+      axios.get(`https://api.github.com/users/sabirlkhaloufi`).then((response)=>{
+        setDataUser(response.data)
+        getRepo();
+        
+    }).catch((Error)=>{
+        console.log(Error);
+    })   
+    }, [])
+
   return (
     <div className="main-content position-relative max-height-vh-100 h-100">
 
-  <div className="card shadow-lg mx-4 card-profile-bottom">
+  <div className="card shadow-lg mx-4 mt-5">
     <div className="card-body">
       <div className="row gx-4">
         <div className="col-auto">
@@ -55,9 +65,7 @@ function Profile() {
               Developed By Sabir Lkhaloufi
             </p>
           </div>
-          <div>
-            <ul><li>jjd</li></ul>
-          </div>
+          <SocialMedia/>
         </div>
         
         <div className="col-lg-4 col-md-6 my-sm-auto ms-sm-auto me-sm-0 mx-auto mt-3">
@@ -92,6 +100,7 @@ function Profile() {
           <div className="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
             <div className="d-flex justify-content-between">
               <a target="_blank" href={dataUser.html_url } className="btn btn-sm btn-dark float-right mb-0  ">Profile</a>
+              <a target="_blank" href={"https://"+dataUser.blog} className="btn btn-sm btn-dark float-right mb-0  ">Portfolio</a>
               {/* <a href="javascript:;" className="btn btn-sm btn-info mb-0 d-block d-lg-none"><i className="ni ni-collection" /></a> */}
               <a href={"https://twitter.com/"+dataUser.twitter_username} target="_blank" className="btn btn-sm btn-dark float-right mb-0 ">Twitter</a>
               {/* <a href="javascript:;" className="btn btn-sm btn-dark float-right mb-0 d-block d-lg-none"><i className="ni ni-email-83" /></a> */}
@@ -126,7 +135,7 @@ function Profile() {
                 <i className="ni business_briefcase-24 mr-2" />{dataUser.company?dataUser.company:"Your Company" }
               </div>
               <div>
-                <i className="ni education_hat mr-2" />University of Computer Science
+                <i className="ni education_hat mr-2" />created at: {dataUser.created_at}
               </div>
             </div>
           </div>
